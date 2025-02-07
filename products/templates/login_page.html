@@ -1,0 +1,143 @@
+{% extends "base.html" %} {% block start %}
+
+<style>
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color:rgb(222, 221, 221); /* Light gray background */
+    padding: 0 20px;
+  }
+
+  /* Login Form Styling */
+  .login-form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px; /* Limit the width of the form */
+  }
+
+  h2 {
+    text-align: center;
+    color: #ff8c00; /* Pizza theme color */
+    font-family: "Arial", sans-serif;
+    margin-bottom: 20px;
+  }
+
+  .input-group {
+    margin-bottom: 15px;
+  }
+
+  .input-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+  }
+
+  .input-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+  }
+
+  .input-group input:focus {
+    border-color: #ff8c00; /* Highlight input with pizza theme color */
+    outline: none;
+  }
+
+  .form-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn-login {
+    width: 100%;
+    padding: 12px;
+    background-color: #ff8c00; /* Pizza theme color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .btn-login:hover {
+    background-color: #ff6f00; /* Darken button on hover */
+  }
+
+  .signup-link {
+    margin-top: 15px;
+    text-align: center;
+  }
+
+  .signup-link p {
+    font-size: 14px;
+    color: #555;
+  }
+
+  .signup-link a {
+    color: #ff8c00;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .signup-link a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<div class="login-container">
+  <div class="login-form">
+    <h2>Login</h2>
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}" role="alert">
+        {{ message }}
+      </div>
+      {% endfor %}
+    {% endif %}
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="input-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Enter your username"
+          required
+        />
+      </div>
+
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Enter your password"
+          required
+        />
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-login">Login</button>
+        <div class="signup-link">
+          <p>
+            Don't have an account?
+            <a href="{% url 'register_page' %}">Sign Up</a>
+          </p>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

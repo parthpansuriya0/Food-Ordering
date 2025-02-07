@@ -1,22 +1,28 @@
-"""
-URL configuration for foodorder project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf import settings
+from django.conf.urls.static import static
+from products.views import *
 
 urlpatterns = [
+    path('', home,name="home"),
+    path('deals/', deals,name="deals"),
+    path('add-cart/<pizza_uid>', add_cart,name="add_cart"),
+    path('add-cart-deals    /<pizza_uid>', add_cart_d,name="add_cart_d"),
+    path('cart/', cart,name="cart"),
+    path('remove-cart-item/<cart_item_uid>/', remove_cart_item,name="remove_cart_item"),
+    path('orders/', orders,name="orders"),
+    path('create-payment-order/', create_payment_order, name='create_payment_order'),
+    path('verify-payment/', verify_payment, name='verify_payment'),
+    path('success/', success, name='success'),
+    path('login/', login_page,name="login_page"),
+    path('logout/', logout_page,name="logout_page"),
+    path('register/', register_page,name="register_page"),
     path('admin/', admin.site.urls),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+
+urlpatterns += staticfiles_urlpatterns() 

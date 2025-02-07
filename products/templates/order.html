@@ -1,0 +1,51 @@
+{% extends 'base.html' %} {% block start %}
+
+<style>
+  .cart-container {
+    width: 80%;
+    margin: 30px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.2);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  th,
+  td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+  th {
+    background-color: #d32f2f;
+    color: white;
+  }
+
+  
+</style>
+
+<div class="cart-container">
+  <h2>Your Success Orders</h2>
+  <table>
+    <tr>
+      <th>No.</th>
+      <th>Date</th>
+      <th>Total Amount</th>
+    </tr>
+    {% for o in order %}
+    <tr>
+      <td>{{ forloop.counter }}</td>
+      <td>{{o.created_at}}</td>
+      <td>{{o.get_cart_total}}</td>
+    </tr>
+    {% endfor %}
+
+    
+  </table>
+
+</div>
+{% endblock %}

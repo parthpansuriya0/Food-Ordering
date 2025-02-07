@@ -1,0 +1,114 @@
+{% extends "base.html" %} {% block start %}
+
+<style>
+    
+    .class-container {
+        display: grid;             
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));  /* Automatically adjust to fit the space */
+        gap: 10px;                 
+        padding: 15px;             
+    }
+    
+    .pizza-card {
+        border-radius: 15px;
+        background: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .pizza-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .pizza-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .pizza-card .card-content {
+        padding: 20px;
+    }
+
+    .pizza-card .title {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 8px;
+    }
+
+    .pizza-card .description {
+        font-size: 14px;
+        color: #777;
+        margin-bottom: 12px;
+    }
+
+    .pizza-card .rating-price {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 15px;
+    }
+
+    .pizza-card .rating {
+        font-size: 16px;
+        font-weight: bold;
+        color: #28a745;
+        display: flex;
+        align-items: center;
+    }
+
+    .pizza-card .rating span {
+        margin-left: 6px;
+        font-size: 14px;
+        font-weight: normal;
+        color: #555;
+    }
+
+    .pizza-card .price {
+        font-size: 18px;
+        font-weight: bold;
+        color: #ff5733;
+    }
+
+    .pizza-card .add-button {
+        display: block;
+        text-align: center;
+        padding: 12px;
+        font-size: 14px;
+        font-weight: bold;
+        background-color: #ff5733;
+        color: #fff;
+        text-transform: uppercase;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: auto;
+        transition: background-color 0.3s;
+    }
+
+    .pizza-card .add-button:hover {
+        background-color: #e0472b;
+        color:#fff;
+    }
+</style>
+
+<div class="class-container">
+{% for pizza in pizzas %}
+<div class="pizza-card m-3">
+    <img src="/media/{{pizza.images}}" alt="Margherita Pizza">
+    <div class="card-content">
+        <div class="title">{{pizza.pizza_name}} | {{pizza.category}}</div>
+        <div class="description">{{pizza.pizza_detail}}</div>
+        <div class="rating-price">
+            <div class="price">₹{{pizza.price}}</div>
+        </div>
+        <a href="{% url 'add_cart' pizza.uid %}" class="add-button">Add to Cart</a>
+    </div>
+</div>
+{% endfor %}
+</div>
+{% endblock %}

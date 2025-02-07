@@ -1,0 +1,124 @@
+{% extends 'base.html' %} {% block start %}
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fff3e0;
+    text-align: center;
+  }
+  header {
+    background-color: #d32f2f;
+    color: white;
+    padding: 20px;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 30px;
+  }
+  .deal-container {
+    width: 30%;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+  .pizza-img {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 10px;
+  }
+  .pizza-name {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 15px 0;
+  }
+  .price {
+    font-size: 18px;
+    margin: 10px 0;
+  }
+  .original-price {
+    text-decoration: line-through;
+    color: #888;
+    font-size: 14px;
+    margin-right: 1px;
+  }
+  .discounted-price {
+    color: #d32f2f;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  .order-btn {
+    display: inline-block;
+    background-color: #ff5722;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 10px;
+    transition: background 0.3s;
+    margin-top: 15px;
+  }
+  .order-btn:hover {
+    background-color: #e64a19;
+    color: white;
+  }
+</style>
+
+<header>🔥 Special Pizza Deal - FLAT ₹75 Off! 🔥</header>
+
+<div class="container">
+  {% for pizza in pizzas %}
+  <div class="deal-container">
+    <img
+      src="/media/{{pizza.images}}"
+      alt="{{ pizza.name }}"
+      class="pizza-img"
+    />
+    <div class="pizza-name">{{ pizza.pizza_name }} | {{ pizza.category }}</div>
+
+    <div class="price">
+        <span class="original-price">₹{{ pizza.price }}</span>
+        <span class="discounted-price">₹</span>
+    </div>
+
+    <a href="{% url 'add_cart_d' pizza.uid %}" class="order-btn">Order Now</a>
+  </div>
+  {% endfor%}
+</div>
+
+  <script>
+         window.onload = function() {
+            // Get all the price divs
+            var priceElements = document.querySelectorAll('.price');
+
+            // Set the discount percentage (you can change this value as needed)
+            var discountPercentage = 10; // 20% discount
+
+            // Loop through each price div and calculate the discounted price
+            priceElements.forEach(function(priceElement) {
+                // Get the original price from the element
+                var originalPriceElement = priceElement.querySelector('.original-price');
+                var discountedPriceElement = priceElement.querySelector('.discounted-price');
+
+                // Get the original price value (using innerText)
+                var originalPrice = parseFloat(originalPriceElement.innerText.replace('₹', ''));
+
+                // Calculate the discounted price
+                var discountedPrice = originalPrice + 75;
+
+                // Update the discounted price
+                discountedPriceElement.innerText = '₹' + originalPrice.toFixed(0); // Format to 2 decimal places
+                originalPriceElement.innerText = '₹' + discountedPrice.toFixed(0); // Format to 2 decimal places
+            });
+        };
+    </script>
+
+{% endblock %}
